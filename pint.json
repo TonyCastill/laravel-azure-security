@@ -1,0 +1,8 @@
+
+{
+    "present":"laravel",
+    "rules":{
+        "strict_comparison":true
+    }
+}
+
