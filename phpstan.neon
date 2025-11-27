@@ -1,6 +1,6 @@
 includes:
     - vendor/nunomaduro/larastan/extension.neon
-parameters
+parameters:
     path:
         - app
         - config
