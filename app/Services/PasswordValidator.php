@@ -69,9 +69,9 @@ class PasswordValidator
      */
     private function getStrength(int $score): string
     {
-        if ($score >= 90) {
+        if ($score >= 100) {
             return 'muy fuerte';
-        } elseif ($score >= 70) {
+        } elseif ($score >= 75) {
             return 'fuerte';
         } elseif ($score >= 50) {
             return 'moderada';

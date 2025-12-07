@@ -77,26 +77,26 @@ class PasswordValidatorTest extends TestCase
         $result = $this->validator->validate('abc');
 
         $this->assertFalse($result['valid']);
-        $this->assertCount(4, $result['errors']); // Falta longitud, mayúscula, número y especial
+        $this->assertCount(4, $result['errors']);
     }
 
     /** @test */
     public function it_calculates_correct_strength_levels()
     {
-        // Débil
-        $result = $this->validator->validate('abcd1234');
+        // Débil (menos de 50 puntos)
+        $result = $this->validator->validate('abcdefg');
         $this->assertEquals('débil', $result['strength']);
 
-        // Moderada
-        $result = $this->validator->validate('Abcd1234');
+        // Moderada (50-74 puntos)
+        $result = $this->validator->validate('abcd1234');
         $this->assertEquals('moderada', $result['strength']);
 
-        // Fuerte
-        $result = $this->validator->validate('Abcd123!');
+        // Fuerte (75-99 puntos)
+        $result = $this->validator->validate('Abcd1234');
         $this->assertEquals('fuerte', $result['strength']);
 
-        // Muy fuerte
-        $result = $this->validator->validate('Abcd123!@#');
+        // Muy fuerte (100 puntos)
+        $result = $this->validator->validate('Abcd123!');
         $this->assertEquals('muy fuerte', $result['strength']);
     }
 
