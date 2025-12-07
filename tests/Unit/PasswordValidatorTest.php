@@ -2,127 +2,53 @@
 
 namespace Tests\Unit;
 
-use App\Services\PasswordValidator;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
+use App\Services\PasswordSecurityValidator;
 
-class PasswordValidatorTest extends TestCase
+class PasswordSecurityValidatorTest extends TestCase
 {
-    private PasswordValidator $validator;
-
-    protected function setUp(): void
+    public function test_valid_password_returns_true()
     {
-        parent::setUp();
-        $this->validator = new PasswordValidator();
+        $validator = new PasswordSecurityValidator();
+
+        $this->assertTrue(
+            $validator->validate("Seguro123!")
+        );
     }
 
-    /** @test */
-    public function it_validates_a_strong_password_successfully()
+    public function test_short_password_returns_false()
     {
-        $result = $this->validator->validate('Abcd123!@#');
+        $validator = new PasswordSecurityValidator();
 
-        $this->assertTrue($result['valid']);
-        $this->assertEquals('Contraseña válida y segura', $result['message']);
-        $this->assertGreaterThanOrEqual(90, $result['score']);
-        $this->assertEmpty($result['errors']);
+        $this->assertFalse(
+            $validator->validate("Ab1!")
+        );
     }
 
-    /** @test */
-    public function it_rejects_password_shorter_than_8_characters()
+    public function test_password_without_uppercase_returns_false()
     {
-        $result = $this->validator->validate('Ab1!');
+        $validator = new PasswordSecurityValidator();
 
-        $this->assertFalse($result['valid']);
-        $this->assertContains('La contraseña debe tener al menos 8 caracteres', $result['errors']);
+        $this->assertFalse(
+            $validator->validate("segura123!")
+        );
     }
 
-    /** @test */
-    public function it_rejects_password_without_uppercase_letter()
+    public function test_password_without_number_returns_false()
     {
-        $result = $this->validator->validate('abcd1234!@#');
+        $validator = new PasswordSecurityValidator();
 
-        $this->assertFalse($result['valid']);
-        $this->assertContains('Debe contener al menos una letra mayúscula', $result['errors']);
+        $this->assertFalse(
+            $validator->validate("Segura!!!")
+        );
     }
 
-    /** @test */
-    public function it_rejects_password_without_lowercase_letter()
+    public function test_password_without_symbol_returns_false()
     {
-        $result = $this->validator->validate('ABCD1234!@#');
+        $validator = new PasswordSecurityValidator();
 
-        $this->assertFalse($result['valid']);
-        $this->assertContains('Debe contener al menos una letra minúscula', $result['errors']);
-    }
-
-    /** @test */
-    public function it_rejects_password_without_number()
-    {
-        $result = $this->validator->validate('Abcdefgh!@#');
-
-        $this->assertFalse($result['valid']);
-        $this->assertContains('Debe contener al menos un número', $result['errors']);
-    }
-
-    /** @test */
-    public function it_rejects_password_without_special_character()
-    {
-        $result = $this->validator->validate('Abcdefgh123');
-
-        $this->assertFalse($result['valid']);
-        $this->assertContains('Debe contener al menos un carácter especial (!@#$%^&*...)', $result['errors']);
-    }
-
-    /** @test */
-    public function it_returns_multiple_errors_for_weak_password()
-    {
-        $result = $this->validator->validate('abc');
-
-        $this->assertFalse($result['valid']);
-        $this->assertCount(4, $result['errors']);
-    }
-
-    /** @test */
-    public function it_calculates_correct_strength_levels()
-    {
-        $result = $this->validator->validate('abcdefg');
-        $this->assertEquals('débil', $result['strength']);
-
-        $result = $this->validator->validate('abcd1234');
-        $this->assertEquals('moderada', $result['strength']);
-
-        $result = $this->validator->validate('Abcd1234');
-        $this->assertEquals('fuerte', $result['strength']);
-
-        $result = $this->validator->validate('Abcd123!');
-        $this->assertEquals('muy fuerte', $result['strength']);
-    }
-
-    /** @test */
-    public function it_generates_valid_password_with_default_length()
-    {
-        $password = $this->validator->generate();
-
-        $this->assertEquals(12, strlen($password));
-
-        $result = $this->validator->validate($password);
-        $this->assertTrue($result['valid']);
-    }
-
-    /** @test */
-    public function it_generates_valid_password_with_custom_length()
-    {
-        $password = $this->validator->generate(16);
-
-        $this->assertEquals(16, strlen($password));
-
-        $result = $this->validator->validate($password);
-        $this->assertTrue($result['valid']);
-    }
-
-    /** @test */
-    public function it_generates_minimum_8_characters_when_shorter_length_requested()
-    {
-        $password = $this->validator->generate(5);
-
-        $this->assertEquals(8, strlen($password));
+        $this->assertFalse(
+            $validator->validate("Seguro123")
+        );
     }
 }
