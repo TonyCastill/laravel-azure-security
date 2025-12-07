@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use InvalidArgumentException;
 
 class SortController extends Controller
@@ -11,8 +11,9 @@ class SortController extends Controller
     /**
      * Ordena un arreglo de números enteros positivos
      *
-     * @param array<int> $numbers Array de números enteros positivos
+     * @param  array<int>  $numbers  Array de números enteros positivos
      * @return array<int> Array ordenado de menor a mayor
+     *
      * @throws InvalidArgumentException Si el array está vacío o contiene valores no válidos
      */
     public function sortPositiveIntegers(array $numbers): array
@@ -38,27 +39,24 @@ class SortController extends Controller
 
     /**
      * Endpoint HTTP para ordenar números
-     *
-     * @param Request $request
-     * @return JsonResponse
      */
     public function sort(Request $request): JsonResponse
     {
         try {
             $numbers = $request->input('numbers', []);
-            
+
             $sorted = $this->sortPositiveIntegers($numbers);
-            
+
             return response()->json([
                 'success' => true,
                 'original' => $numbers,
-                'sorted' => $sorted
+                'sorted' => $sorted,
             ], 200);
-            
+
         } catch (InvalidArgumentException $e) {
             return response()->json([
                 'success' => false,
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ], 400);
         }
     }

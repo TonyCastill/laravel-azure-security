@@ -13,7 +13,7 @@ class SortControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->controller = new SortController();
+        $this->controller = new SortController;
     }
 
     /**
@@ -23,7 +23,7 @@ class SortControllerTest extends TestCase
     {
         $numbers = [5, 2, 8, 1, 9, 3];
         $result = $this->controller->sortPositiveIntegers($numbers);
-        
+
         $this->assertEquals([1, 2, 3, 5, 8, 9], $result);
     }
 
@@ -34,7 +34,7 @@ class SortControllerTest extends TestCase
     {
         $numbers = [1, 2, 3, 4, 5];
         $result = $this->controller->sortPositiveIntegers($numbers);
-        
+
         $this->assertEquals([1, 2, 3, 4, 5], $result);
     }
 
@@ -45,7 +45,7 @@ class SortControllerTest extends TestCase
     {
         $numbers = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
         $result = $this->controller->sortPositiveIntegers($numbers);
-        
+
         $this->assertEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], $result);
     }
 
@@ -56,7 +56,7 @@ class SortControllerTest extends TestCase
     {
         $numbers = [42];
         $result = $this->controller->sortPositiveIntegers($numbers);
-        
+
         $this->assertEquals([42], $result);
     }
 
@@ -67,7 +67,7 @@ class SortControllerTest extends TestCase
     {
         $numbers = [5, 2, 8, 2, 9, 5, 1];
         $result = $this->controller->sortPositiveIntegers($numbers);
-        
+
         $this->assertEquals([1, 2, 2, 5, 5, 8, 9], $result);
     }
 
@@ -78,7 +78,7 @@ class SortControllerTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('El arreglo no puede estar vacío');
-        
+
         $this->controller->sortPositiveIntegers([]);
     }
 
@@ -89,7 +89,7 @@ class SortControllerTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Todos los números deben ser enteros positivos (mayores a 0)');
-        
+
         $this->controller->sortPositiveIntegers([1, 2, -3, 4]);
     }
 
@@ -100,7 +100,7 @@ class SortControllerTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Todos los números deben ser enteros positivos (mayores a 0)');
-        
+
         $this->controller->sortPositiveIntegers([1, 2, 0, 4]);
     }
 
@@ -113,7 +113,7 @@ class SortControllerTest extends TestCase
         // Cuando PHP espera int, convierte 3.9 -> 3, 4.1 -> 4
         $numbers = [5, 2, 3, 1, 4];
         $result = $this->controller->sortPositiveIntegers($numbers);
-        
+
         $this->assertEquals([1, 2, 3, 4, 5], $result);
     }
 
@@ -124,7 +124,7 @@ class SortControllerTest extends TestCase
     {
         $numbers = [1000000, 500, 999999, 1, 50000];
         $result = $this->controller->sortPositiveIntegers($numbers);
-        
+
         $this->assertEquals([1, 500, 50000, 999999, 1000000], $result);
     }
 
@@ -135,9 +135,9 @@ class SortControllerTest extends TestCase
     {
         $numbers = [5, 2, 8, 1, 9];
         $original = $numbers;
-        
+
         $this->controller->sortPositiveIntegers($numbers);
-        
+
         $this->assertEquals($original, $numbers);
     }
 
@@ -148,9 +148,9 @@ class SortControllerTest extends TestCase
     {
         $numbers = range(1, 1000);
         shuffle($numbers);
-        
+
         $result = $this->controller->sortPositiveIntegers($numbers);
-        
+
         $this->assertEquals(range(1, 1000), $result);
         $this->assertCount(1000, haystack: $result);
     }
