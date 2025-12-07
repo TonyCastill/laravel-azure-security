@@ -22,12 +22,8 @@ class SortController extends Controller
             throw new InvalidArgumentException('El arreglo no puede estar vacío');
         }
 
-        // Validar que todos los elementos sean enteros positivos
+        // Validar que todos los números sean positivos
         foreach ($numbers as $number) {
-            if (!is_int($number)) {
-                throw new InvalidArgumentException('Todos los elementos deben ser números enteros');
-            }
-            
             if ($number <= 0) {
                 throw new InvalidArgumentException('Todos los números deben ser enteros positivos (mayores a 0)');
             }
