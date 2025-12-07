@@ -7,8 +7,8 @@ class PasswordValidator
     /**
      * Valida si una contraseña cumple con criterios de seguridad
      *
-     * @param string $password La contraseña a validar
-     * @return array Resultado de la validación con detalles
+     * @param  string  $password  La contraseña a validar
+     * @return array{valid: bool, score: int, strength: string, errors: array<int, string>, message: string}
      */
     public function validate(string $password): array
     {
@@ -23,28 +23,28 @@ class PasswordValidator
         }
 
         // Criterio 2: Debe contener al menos una letra mayúscula
-        if (!preg_match('/[A-Z]/', $password)) {
+        if (! preg_match('/[A-Z]/', $password)) {
             $errors[] = 'Debe contener al menos una letra mayúscula';
         } else {
             $score += 25;
         }
 
         // Criterio 3: Debe contener al menos una letra minúscula
-        if (!preg_match('/[a-z]/', $password)) {
+        if (! preg_match('/[a-z]/', $password)) {
             $errors[] = 'Debe contener al menos una letra minúscula';
         } else {
             $score += 25;
         }
 
         // Criterio 4: Debe contener al menos un número
-        if (!preg_match('/[0-9]/', $password)) {
+        if (! preg_match('/[0-9]/', $password)) {
             $errors[] = 'Debe contener al menos un número';
         } else {
             $score += 15;
         }
 
         // Criterio 5: Debe contener al menos un carácter especial
-        if (!preg_match('/[!@#$%^&*(),.?":{}|<>]/', $password)) {
+        if (! preg_match('/[!@#$%^&*(),.?":{}|<>]/', $password)) {
             $errors[] = 'Debe contener al menos un carácter especial (!@#$%^&*...)';
         } else {
             $score += 10;
@@ -57,14 +57,14 @@ class PasswordValidator
             'score' => $score,
             'strength' => $this->getStrength($score),
             'errors' => $errors,
-            'message' => $isValid ? 'Contraseña válida y segura' : 'La contraseña no cumple con los requisitos de seguridad'
+            'message' => $isValid ? 'Contraseña válida y segura' : 'La contraseña no cumple con los requisitos de seguridad',
         ];
     }
 
     /**
      * Determina el nivel de fortaleza basado en el puntaje
      *
-     * @param int $score Puntaje obtenido
+     * @param  int  $score  Puntaje obtenido
      * @return string Nivel de fortaleza
      */
     private function getStrength(int $score): string
@@ -83,7 +83,7 @@ class PasswordValidator
     /**
      * Genera una contraseña segura aleatoria
      *
-     * @param int $length Longitud de la contraseña (mínimo 8)
+     * @param  int  $length  Longitud de la contraseña (mínimo 8)
      * @return string Contraseña generada
      */
     public function generate(int $length = 12): string
@@ -105,7 +105,7 @@ class PasswordValidator
         $password .= $special[random_int(0, strlen($special) - 1)];
 
         // Completar el resto de la longitud
-        $allChars = $uppercase . $lowercase . $numbers . $special;
+        $allChars = $uppercase.$lowercase.$numbers.$special;
         for ($i = 4; $i < $length; $i++) {
             $password .= $allChars[random_int(0, strlen($allChars) - 1)];
         }

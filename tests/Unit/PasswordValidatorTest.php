@@ -12,7 +12,7 @@ class PasswordValidatorTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->validator = new PasswordValidator();
+        $this->validator = new PasswordValidator;
     }
 
     /** @test */
