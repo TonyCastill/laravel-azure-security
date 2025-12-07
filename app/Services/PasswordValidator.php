@@ -57,7 +57,7 @@ class PasswordValidator
             'score' => $score,
             'strength' => $this->getStrength($score),
             'errors' => $errors,
-            'message' => $isValid ? 'Contraseña válida y segura' : 'La contraseña no cumple con los requisitos de seguridad'
+            'message' => $isValid ? 'Contraseña válida y segura' : 'La contraseña no cumple con los requisitos de seguridad',
         ];
     }
 
@@ -75,9 +75,9 @@ class PasswordValidator
             return 'fuerte';
         } elseif ($score >= 50) {
             return 'moderada';
-        } else {
-            return 'débil';
         }
+
+        return 'débil';
     }
 
     /**
