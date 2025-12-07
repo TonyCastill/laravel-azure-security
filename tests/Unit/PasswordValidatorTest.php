@@ -83,19 +83,15 @@ class PasswordValidatorTest extends TestCase
     /** @test */
     public function it_calculates_correct_strength_levels()
     {
-        // Débil (menos de 50 puntos)
         $result = $this->validator->validate('abcdefg');
         $this->assertEquals('débil', $result['strength']);
 
-        // Moderada (50-74 puntos)
         $result = $this->validator->validate('abcd1234');
         $this->assertEquals('moderada', $result['strength']);
 
-        // Fuerte (75-99 puntos)
         $result = $this->validator->validate('Abcd1234');
         $this->assertEquals('fuerte', $result['strength']);
 
-        // Muy fuerte (100 puntos)
         $result = $this->validator->validate('Abcd123!');
         $this->assertEquals('muy fuerte', $result['strength']);
     }

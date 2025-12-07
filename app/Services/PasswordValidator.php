@@ -23,28 +23,28 @@ class PasswordValidator
         }
 
         // Criterio 2: Debe contener al menos una letra mayúscula
-        if (!preg_match('/[A-Z]/', $password)) {
+        if (! preg_match('/[A-Z]/', $password)) {
             $errors[] = 'Debe contener al menos una letra mayúscula';
         } else {
             $score += 25;
         }
 
         // Criterio 3: Debe contener al menos una letra minúscula
-        if (!preg_match('/[a-z]/', $password)) {
+        if (! preg_match('/[a-z]/', $password)) {
             $errors[] = 'Debe contener al menos una letra minúscula';
         } else {
             $score += 25;
         }
 
         // Criterio 4: Debe contener al menos un número
-        if (!preg_match('/[0-9]/', $password)) {
+        if (! preg_match('/[0-9]/', $password)) {
             $errors[] = 'Debe contener al menos un número';
         } else {
             $score += 15;
         }
 
         // Criterio 5: Debe contener al menos un carácter especial
-        if (!preg_match('/[!@#$%^&*(),.?":{}|<>]/', $password)) {
+        if (! preg_match('/[!@#$%^&*(),.?":{}|<>]/', $password)) {
             $errors[] = 'Debe contener al menos un carácter especial (!@#$%^&*...)';
         } else {
             $score += 10;
@@ -71,9 +71,13 @@ class PasswordValidator
     {
         if ($score >= 100) {
             return 'muy fuerte';
-        } elseif ($score >= 75) {
+        }
+
+        if ($score >= 75) {
             return 'fuerte';
-        } elseif ($score >= 50) {
+        }
+
+        if ($score >= 50) {
             return 'moderada';
         }
 
@@ -105,12 +109,15 @@ class PasswordValidator
         $password .= $special[random_int(0, strlen($special) - 1)];
 
         // Completar el resto de la longitud
-        $allChars = $uppercase . $lowercase . $numbers . $special;
+        $allChars = $uppercase
+            . $lowercase
+            . $numbers
+            . $special;
+
         for ($i = 4; $i < $length; $i++) {
             $password .= $allChars[random_int(0, strlen($allChars) - 1)];
         }
 
-        // Mezclar los caracteres
         return str_shuffle($password);
     }
 }
