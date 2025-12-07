@@ -11,8 +11,8 @@ class SortController extends Controller
     /**
      * Ordena un arreglo de números enteros positivos
      *
-     * @param array $numbers Array de números enteros positivos
-     * @return array Array ordenado de menor a mayor
+     * @param array<int> $numbers Array de números enteros positivos
+     * @return array<int> Array ordenado de menor a mayor
      * @throws InvalidArgumentException Si el array está vacío o contiene valores no válidos
      */
     public function sortPositiveIntegers(array $numbers): array
