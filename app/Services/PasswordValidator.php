@@ -8,7 +8,7 @@ class PasswordValidator
      * Valida si una contraseña cumple con criterios de seguridad
      *
      * @param string $password La contraseña a validar
-     * @return array Resultado de la validación con detalles
+     * @return array{valid: bool, score: int, strength: string, errors: array<int, string>, message: string}
      */
     public function validate(string $password): array
     {
