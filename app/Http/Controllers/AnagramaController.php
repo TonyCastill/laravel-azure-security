@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-class Anagrama
+class AnagramaController extends Controller
 {
-    public static function sonAnagramas(string $str1, string $str2): bool
+    public static function sonAnagramas(string $str1, string $str2): array
     {
         $arr1 = str_split(strtolower($str1));
         $arr2 = str_split(strtolower($str2));
@@ -12,6 +12,11 @@ class Anagrama
         sort($arr1);
         sort($arr2);
         
-        return $arr1 === $arr2;
+        $sonAnagramas = $arr1 === $arr2;       
+        return [
+            'palabra1' => $str1,
+            'palabra2' => $str2,
+            'son_anagramas' => $sonAnagramas,
+        ];
     }
 }
