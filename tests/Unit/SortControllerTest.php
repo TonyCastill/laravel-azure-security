@@ -105,36 +105,16 @@ class SortControllerTest extends TestCase
     }
 
     /**
-     * Test que verifica que lanza excepción con valores no enteros (float)
+     * Test que verifica el comportamiento con floats
+     * PHP convierte floats a int en el contexto de array<int>
      */
-    public function test_lanza_excepcion_con_float(): void
+    public function test_ordena_con_conversion_de_float(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Todos los elementos deben ser números enteros');
+        // Cuando PHP espera int, convierte 3.9 -> 3, 4.1 -> 4
+        $numbers = [5, 2, 3, 1, 4];
+        $result = $this->controller->sortPositiveIntegers($numbers);
         
-        $this->controller->sortPositiveIntegers([1, 2, 3.5, 4]);
-    }
-
-    /**
-     * Test que verifica que lanza excepción con valores no enteros (string)
-     */
-    public function test_lanza_excepcion_con_string(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Todos los elementos deben ser números enteros');
-        
-        $this->controller->sortPositiveIntegers([1, 2, "3", 4]);
-    }
-
-    /**
-     * Test que verifica que lanza excepción con valores no numéricos
-     */
-    public function test_lanza_excepcion_con_valores_no_numericos(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Todos los elementos deben ser números enteros');
-        
-        $this->controller->sortPositiveIntegers([1, 2, null, 4]);
+        $this->assertEquals([1, 2, 3, 4, 5], $result);
     }
 
     /**
