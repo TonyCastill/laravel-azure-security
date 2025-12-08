@@ -6,11 +6,12 @@ class SlugGenerator
 {
     /**
      * Genera un slug URL-friendly a partir de un texto
-     * 
-     * @param string $text Texto a convertir en slug
-     * @param string $separator Separador entre palabras (default: '-')
-     * @param int $maxLength Longitud máxima del slug (default: 255)
+     *
+     * @param  string  $text  Texto a convertir en slug
+     * @param  string  $separator  Separador entre palabras (default: '-')
+     * @param  int  $maxLength  Longitud máxima del slug (default: 255)
      * @return string Slug generado
+     *
      * @throws \InvalidArgumentException Si el texto está vacío
      */
     public static function generate(
@@ -52,9 +53,9 @@ class SlugGenerator
 
     /**
      * Valida si un string es un slug válido
-     * 
-     * @param string $slug Slug a validar
-     * @param string $separator Separador esperado (default: '-')
+     *
+     * @param  string  $slug  Slug a validar
+     * @param  string  $separator  Separador esperado (default: '-')
      * @return bool True si es un slug válido
      */
     public static function isValid(string $slug, string $separator = '-'): bool
@@ -64,9 +65,9 @@ class SlugGenerator
         }
 
         // Un slug válido solo contiene minúsculas, números y el separador
-        $pattern = '/^[a-z0-9' . preg_quote($separator, '/') . ']+$/';
-        
-        if (!preg_match($pattern, $slug)) {
+        $pattern = '/^[a-z0-9'.preg_quote($separator, '/').']+$/';
+
+        if (! preg_match($pattern, $slug)) {
             return false;
         }
 
@@ -76,7 +77,7 @@ class SlugGenerator
         }
 
         // No debe tener separadores múltiples consecutivos
-        if (strpos($slug, $separator . $separator) !== false) {
+        if (strpos($slug, $separator.$separator) !== false) {
             return false;
         }
 
@@ -85,8 +86,8 @@ class SlugGenerator
 
     /**
      * Remueve acentos de caracteres latinos
-     * 
-     * @param string $text Texto con posibles acentos
+     *
+     * @param  string  $text  Texto con posibles acentos
      * @return string Texto sin acentos
      */
     private static function removeAccents(string $text): string
