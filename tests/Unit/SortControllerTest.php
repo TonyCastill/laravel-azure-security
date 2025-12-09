@@ -20,8 +20,9 @@ class SortControllerTest extends TestCase
      * Test que verifica el ordenamiento correcto de números enteros positivos
      */
     public function test_ordena_numeros_positivos_correctamente(): void
-    {
-        $numbers = [5, 2, 8, 1, 9, 3];
+    {   
+        //3
+        $numbers = [5, 2, 8, 1, 9];
         $result = $this->controller->sortPositiveIntegers($numbers);
 
         $this->assertEquals([1, 2, 3, 5, 8, 9], $result);
