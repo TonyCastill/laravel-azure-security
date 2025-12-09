@@ -22,10 +22,12 @@ class SortControllerTest extends TestCase
     public function test_ordena_numeros_positivos_correctamente(): void
     {   
         //3
-        $numbers = [5, 2, 8, 1, 9];
+        $numbers = [5, 2, 8, 1, 9,3];
         $result = $this->controller->sortPositiveIntegers($numbers);
 
         $this->assertEquals([1, 2, 3, 5, 8, 9], $result);
+        $this->assertCount(6, haystack: $result);
+        // $this->addToAssertionCount(6,$this->controller->sizeOfArray($numbers));
     }
 
     /**
